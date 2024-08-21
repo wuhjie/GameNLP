@@ -24,6 +24,7 @@
         </div>
     </div>
     <script>
+
         var container = document.querySelector("#unity-container");
         var canvas = document.querySelector("#unity-canvas");
         var loadingBar = document.querySelector("#unity-loading-bar");
@@ -87,14 +88,9 @@
                     unityInstance.SetFullscreen(1);
                 };
 
-                // Function to handle the "exit" command and display results
-                function handleExitCommand(results) {
-                    unityInstance.SendMessage('GameObjectName', 'ShowResults', JSON.stringify(results));
-                }
-
-                // Function to send data to Flask and handle responses
+                // Function to submit data to Flask server
                 function submitDataToFlask(data) {
-                    fetch('https://3b12-35-238-33-201.ngrok-free.app/process_input', {
+                    fetch('https://df6b-35-238-33-201.ngrok-free.app/process_input', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -104,19 +100,15 @@
                     .then(response => response.json())
                     .then(data => {
                         console.log('Success:', data);
-                        if (data.exit) {
-                            handleExitCommand(data.results);
-                        } else {
-                            unityInstance.SendMessage('GameObjectName', 'UpdateConversation', JSON.stringify(data));
-                        }
+                        unityInstance.SendMessage('GameManager', 'OnReceiveData', JSON.stringify(data));
                     })
                     .catch(error => {
                         console.error('Error:', error);
                     });
                 }
 
-                // Example: How to call the submit function
-                // submitDataToFlask({key: 'value'}); 
+                // Example: How to call the submit function with sample data
+                // submitDataToFlask({ key: 'value' });
 
             }).catch((message) => {
                 alert(message);
@@ -124,6 +116,7 @@
         };
 
         document.body.appendChild(script);
+
     </script>
 </body>
 </html>
