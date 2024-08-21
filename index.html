@@ -23,8 +23,8 @@
             <div id="unity-build-title">GameNLP</div>
         </div>
     </div>
-    
     <script>
+
         var container = document.querySelector("#unity-container");
         var canvas = document.querySelector("#unity-canvas");
         var loadingBar = document.querySelector("#unity-loading-bar");
@@ -88,9 +88,9 @@
                     unityInstance.SetFullscreen(1);
                 };
 
-                // Here is where we add the function to submit data to Flask
+                // Define the function to submit data to Flask server
                 function submitDataToFlask(data) {
-                    fetch('https://1c27-35-238-33-201.ngrok-free.app/process_input', {
+                    fetch('https://dfbc-35-238-33-201.ngrok-free.app/process_input', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -100,6 +100,7 @@
                     .then(response => response.json())
                     .then(data => {
                         console.log('Success:', data);
+                        // Replace 'GameObjectName' and 'YourUnityMethod' with the actual names in Unity
                         unityInstance.SendMessage('GameObjectName', 'YourUnityMethod', JSON.stringify(data));
                     })
                     .catch(error => {
@@ -108,7 +109,7 @@
                 }
 
                 // Example: How to call the submit function
-                // submitDataToFlask({key: 'value'}); 
+                // submitDataToFlask({key: 'value'});
 
             }).catch((message) => {
                 alert(message);
@@ -116,6 +117,7 @@
         };
 
         document.body.appendChild(script);
+
     </script>
 </body>
 </html>
