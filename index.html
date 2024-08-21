@@ -25,6 +25,36 @@
     </div>
 
     <script>
+      // JavaScript function to submit data to your Flask server
+      function submitDataToFlask() {
+        const data = {
+          key: 'value' // Replace with the actual data you need to send
+        };
+
+        fetch('https://85f0-35-238-33-201.ngrok-free.app/process_input', { // Ensure this endpoint is correct
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+          // Handle the response data
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+      }
+
+      // Example: Trigger the function when the page loads
+      window.onload = function() {
+        submitDataToFlask();
+      }
+    </script>
+
+    <script>
       var container = document.querySelector("#unity-container");
       var canvas = document.querySelector("#unity-canvas");
       var loadingBar = document.querySelector("#unity-loading-bar");
@@ -90,6 +120,7 @@
         // performance, uncomment the following line:
         // config.devicePixelRatio = 1;
 
+
       } else {
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
 
@@ -113,35 +144,9 @@
           alert(message);
         });
       };
+
       document.body.appendChild(script);
 
-      // JavaScript function to submit data to your Flask server
-      function submitDataToFlask() {
-        const data = {
-          key: 'value' // Replace with the actual data you need to send
-        };
-
-        fetch('https://85f0-35-238-33-201.ngrok-free.app', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Success:', data);
-          // Handle the response data
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-      }
-
-      // Example: Call this function when the game starts or based on some game event
-      document.addEventListener('DOMContentLoaded', function() {
-        submitDataToFlask(); // You can replace this with a specific event trigger
-      });
     </script>
   </body>
 </html>
